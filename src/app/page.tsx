@@ -1,10 +1,14 @@
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Progress } from "@/components/ui/progress";
 
 export default function Home() {
   return (
-    <main className="text-8xl font-bold tracking-tighter text-shadow-lg text-shadow-violet-200">
+    <main className="flex flex-col gap-4">
       Homepage
-      <Button variant="default">click me</Button>
+      <Button variant="elevated">click me</Button>
+      <Progress />
+      <Input />
     </main>
   );
 }
