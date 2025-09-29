@@ -18,28 +18,31 @@ interface NavbarItemProps {
   title: string;
   href: string;
   //   children: React.ReactNode;
+  navItemClass?: string;
   navLinkClass?: string;
   isActive?: boolean;
+  clickHandler?: () => void;
 }
 
 export const NavbarItem = ({
   title,
   href,
   isActive,
+  navItemClass,
   navLinkClass,
+  clickHandler,
 }: NavbarItemProps) => {
   return (
     <Button
       asChild
       variant="outline"
       className={cn(
-        "hover:border-primary rounded-full border-transparent bg-transparent px-3.5 text-lg hover:bg-transparent",
+        navItemClass,
         isActive && "bg-black text-white hover:bg-black hover:text-white",
         navLinkClass,
       )}
     >
-      {/* {children} */}
-      <Link key={title} href={href}>
+      <Link key={title} href={href} onClick={clickHandler}>
         <span>{title}</span>
       </Link>
     </Button>
@@ -47,7 +50,7 @@ export const NavbarItem = ({
 };
 
 export const Navbar = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const pathname = usePathname();
   return (
     <nav
@@ -75,6 +78,7 @@ export const Navbar = () => {
             key={navLink.title}
             {...navLink}
             isActive={pathname === navLink.href}
+            navItemClass="hover:border-primary rounded-full border-transparent bg-transparent px-3.5 text-lg hover:bg-transparent"
           />
         ))}
       </div>
