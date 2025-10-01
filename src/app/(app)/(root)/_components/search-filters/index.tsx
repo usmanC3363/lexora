@@ -1,5 +1,16 @@
 import React from "react";
+import { SearchInput } from "./search-input";
+import { Categories } from "./categories";
 
-export const SearchFilters = () => {
-  return <div className="h-40">ada</div>;
+interface Props {
+  data: any;
+}
+
+export const SearchFilters = ({ data }: Props) => {
+  return (
+    <div className="flex w-full flex-col gap-4 border-b px-4 py-8 lg:px-12">
+      <SearchInput />
+      <Categories data={data} />
+    </div>
+  );
 };
