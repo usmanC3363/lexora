@@ -8,9 +8,12 @@ export default async function Home() {
 
   const data = await payload.find({
     collection: "categories",
+    depth: 1, // Populates the subcategory with specified lvl of depth
+    where: {
+      parent: { exists: false }, //condition for only rendering parent category
+    },
   });
+  console.log(data);
 
-  return (
-    <main className="flex flex-col gap-4">{JSON.stringify(data, null, 2)}</main>
-  );
+  return <main className="flex flex-col gap-4">dasda</main>;
 }
