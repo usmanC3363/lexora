@@ -4,8 +4,9 @@ export const Categories: CollectionConfig = {
   slug: "categories",
   fields: [
     {
-      name: "string",
+      name: "name",
       type: "text",
+      required: true,
     },
   ],
 };

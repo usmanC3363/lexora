@@ -1,7 +1,16 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Progress } from "@/components/ui/progress";
+import configPromise from "@payload-config";
+import { getPayload } from "payload";
 
-export default function Home() {
-  return <main className="flex flex-col gap-4">Homepage</main>;
+export default async function Home() {
+  const payload = await getPayload({
+    config: configPromise,
+  });
+
+  const data = await payload.find({
+    collection: "categories",
+  });
+
+  return (
+    <main className="flex flex-col gap-4">{JSON.stringify(data, null, 2)}</main>
+  );
 }
