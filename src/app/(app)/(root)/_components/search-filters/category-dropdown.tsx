@@ -4,6 +4,8 @@ import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Category } from "@/payload-types";
+import { useDropdownRef } from "./use-dropdown-postion";
+import { SubcategoryMenu } from "./subcategory-menu";
 
 interface Props {
   category: Category;
@@ -16,8 +18,10 @@ export const CategoryDropdown = ({
   isActive = false,
   isNavigationHovered = false,
 }: Props) => {
-  const [hovered, setHovered] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const { getDropdownPosition } = useDropdownRef(dropdownRef);
 
   // ✅ Extract docs safely
   const subcategories = (
@@ -28,48 +32,47 @@ export const CategoryDropdown = ({
       : []
   ) as Category[];
 
-  const hasSubcategories = subcategories.length > 0;
+  const hasSubcategories = category.subcategory && subcategories.length > 0;
 
-  const shouldShowDropdown =
-    (isActive || hovered || isNavigationHovered) && hasSubcategories;
+  const dropdownPosition = getDropdownPosition();
 
   return (
     <div
       className="relative"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      ref={dropdownRef}
+      onMouseEnter={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
     >
-      {/* Button */}
-      <Button
-        variant="elevated"
-        className={cn(
-          "hover:border-primary h-11 rounded-full border-transparent bg-transparent px-4 text-black hover:bg-white",
-          isActive && !isNavigationHovered && "border-primary bg-white",
-        )}
-      >
-        {category.name}
-      </Button>
-
-      {/* Dropdown rectangle */}
-      {shouldShowDropdown && (
-        <div
-          className="absolute top-full left-4 mt-6 h-fit w-screen max-w-full p-4 shadow-lg transition-all duration-300 md:h-64 lg:h-80"
-          style={{
-            backgroundColor: category.color ?? "#f5f5f5",
-          }}
+      <div className="relative">
+        {/* Button */}
+        <Button
+          variant="elevated"
+          className={cn(
+            "hover:border-primary h-11 rounded-full border-transparent bg-transparent px-4 text-black hover:bg-white",
+            isActive && !isNavigationHovered && "border-primary bg-white",
+          )}
         >
-          <div className="flex flex-col gap-2">
-            {subcategories.map((sub) => (
-              <div
-                key={typeof sub === "string" ? sub : sub.id}
-                className="font-medium text-white"
-              >
-                {typeof sub === "string" ? sub : sub.name}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+          {category.name}
+        </Button>
+
+        {hasSubcategories && (
+          // the arrow type icon
+          <>
+            <div
+              className={cn(
+                "absolute -bottom-3.5 left-1/2 h-0 w-0 -translate-x-1/2 -scale-y-0 border-r-[10px] border-b-[10px] border-l-[10px] border-r-transparent border-b-black border-l-transparent transition-all duration-200",
+                isOpen && "scale-y-100",
+              )}
+              // className="absolute top-full left-4 mt-6 h-fit w-screen max-w-full translate-x-[2px] translate-y-[2px] p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-300"
+            />
+            <SubcategoryMenu
+              category={category}
+              isOpen={isOpen}
+              position={dropdownPosition}
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 };
