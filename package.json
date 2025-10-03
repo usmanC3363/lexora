@@ -7,7 +7,9 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:fresh": "payload migrate:fresh",
+    "db:seed": "bun run src/seed.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
