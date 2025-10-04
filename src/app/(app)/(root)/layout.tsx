@@ -18,6 +18,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
     where: {
       parent: { exists: false }, //condition for only rendering parent category
     },
+    sort: "name",
   });
 
   const formattedData = data.docs.map((doc) => ({
