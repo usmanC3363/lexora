@@ -3,11 +3,9 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { NavbarItem } from "./navbar";
-import { navLinks } from "@/lib/constants";
 import Link from "next/link";
 
 interface NavLinkItem {
@@ -34,11 +32,12 @@ const NavbarSidebar = ({ items, open, onChange }: Props) => {
             </div>
           </SheetHeader>
           <ScrollArea className="flex h-full flex-col gap-8 overflow-y-auto pb-2">
-            {navLinks.map((navLink: NavLinkItem) => (
+            {items.map((navLink: NavLinkItem) => (
               <NavbarItem
                 key={navLink.title}
                 {...navLink}
-                navLinkClass="w-full text-left p-4 hover:bg-black hover:text-white flex items-center justify-start text-base font-medium rounded-none shadow-none"
+                clickHandler={() => onChange(false)}
+                navLinkClass="w-full text-left p-4 border-none hover:bg-black hover:text-white flex items-center justify-start text-base font-medium rounded-none shadow-none"
                 // isActive={pathname === navLink.href}
               />
             ))}
