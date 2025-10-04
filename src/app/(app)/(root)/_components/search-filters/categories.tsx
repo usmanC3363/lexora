@@ -60,6 +60,7 @@ export const Categories = ({ data }: Props) => {
         open={isSidebarOpen}
         onOpenChange={setIsSidebarOpen}
         data={data}
+        setsidebarstatus={setIsSidebarOpen}
       />
 
       {/* Hidden categories for Ref measurement */}
@@ -68,7 +69,7 @@ export const Categories = ({ data }: Props) => {
         style={{ position: "fixed", top: -9999, left: -9999 }}
         ref={measureRef}
       >
-        {data.map((category) => (
+        {data.map((category: Category) => (
           <div key={category.id}>
             <CategoryDropdown
               category={category}
@@ -85,7 +86,7 @@ export const Categories = ({ data }: Props) => {
         onMouseEnter={() => setIsAnyHovered(true)}
         onMouseLeave={() => setIsAnyHovered(false)}
       >
-        {data.slice(0, visibleCount).map((category) => (
+        {data.slice(0, visibleCount).map((category: Category) => (
           <div key={category.id}>
             <CategoryDropdown
               category={category}

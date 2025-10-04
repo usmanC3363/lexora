@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils";
 import { Category } from "@/payload-types";
 import Link from "next/link";
 import React from "react";
@@ -29,7 +28,7 @@ export const SubcategoryMenu = ({ category, isOpen, position }: Props) => {
       {/*invisible gap between submenu and button  */}
       <div className="h-3 w-56" />
       <div
-        className="flex h-52 w-56 translate-x-[2px] translate-y-[2px] flex-col gap-y-2.5 overflow-hidden rounded-md border p-4 text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 ease-in-out"
+        className="flex h-fit w-56 translate-x-[2px] translate-y-[2px] flex-col gap-y-3 overflow-hidden rounded-md border px-4 pt-4 pb-8 text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] transition-all duration-200 ease-in-out"
         style={{
           backgroundColor: category.color ?? "#f5f5f5",
         }}
@@ -37,8 +36,8 @@ export const SubcategoryMenu = ({ category, isOpen, position }: Props) => {
         {subcategories.map((sub) => (
           <Link
             key={typeof sub === "string" ? sub : sub.id}
-            href="/"
-            className="z-110 font-medium text-black underline underline-offset-2 transition-all duration-200 ease-in-out hover:font-black hover:tracking-wide"
+            href={`/${category.slug}/${sub.slug}`}
+            className="z-110 font-medium text-black underline transition-all duration-200 ease-in-out hover:font-black hover:tracking-wide"
           >
             {typeof sub === "string" ? sub : sub.name}
           </Link>

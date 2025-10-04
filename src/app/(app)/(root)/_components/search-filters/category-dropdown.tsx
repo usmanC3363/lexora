@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { Category } from "@/payload-types";
 import { useDropdownRef } from "./use-dropdown-postion";
 import { SubcategoryMenu } from "./subcategory-menu";
+import Link from "next/link";
 
 interface Props {
   category: Category;
@@ -56,7 +57,9 @@ export const CategoryDropdown = ({
               "border-primary translate-x-[4px] translate-y-[4px] bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]",
           )}
         >
-          {category.name}
+          <Link href={`/${category.slug === "all" ? "" : category.slug}`}>
+            {category.name}
+          </Link>
         </Button>
 
         {hasSubcategories && (
