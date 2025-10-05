@@ -7,9 +7,10 @@ import { Category } from "@/payload-types";
 import { useDropdownRef } from "./use-dropdown-postion";
 import { SubcategoryMenu } from "./subcategory-menu";
 import Link from "next/link";
+import { CategoriesGetManyOutput } from "@/modules/categories/types";
 
 interface Props {
-  category: Category;
+  category: CategoriesGetManyOutput[1];
   isActive?: boolean;
   isNavigationHovered?: boolean;
 }
@@ -23,17 +24,6 @@ export const CategoryDropdown = ({
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const { getDropdownPosition } = useDropdownRef(dropdownRef);
-
-  // ✅ Extract docs safely
-  const subcategories = (
-    category.subcategory &&
-    "docs" in category.subcategory &&
-    Array.isArray(category.subcategory.docs)
-      ? category.subcategory.docs
-      : []
-  ) as Category[];
-
-  const hasSubcategories = category.subcategory && subcategories.length > 0;
 
   const dropdownPosition = getDropdownPosition();
 
@@ -62,7 +52,7 @@ export const CategoryDropdown = ({
           </Link>
         </Button>
 
-        {hasSubcategories && (
+        {category.subcategories && category.subcategories.length > 0 && (
           // the arrow type icon
           <>
             <div

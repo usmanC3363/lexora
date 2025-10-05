@@ -6,8 +6,9 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ListFilterIcon } from "lucide-react";
 import { CategoriesSidebar } from "./categories-sidebar";
+import { CategoriesGetManyOutput } from "@/modules/categories/types";
 
-type Props = { data: any };
+type Props = { data: CategoriesGetManyOutput };
 
 export const Categories = ({ data }: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -56,12 +57,7 @@ export const Categories = ({ data }: Props) => {
 
   return (
     <div className="relative">
-      <CategoriesSidebar
-        open={isSidebarOpen}
-        onOpenChange={setIsSidebarOpen}
-        data={data}
-        setsidebarstatus={setIsSidebarOpen}
-      />
+      <CategoriesSidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
 
       {/* Hidden categories for Ref measurement */}
       <div
