@@ -1,22 +1,19 @@
-import { Category } from "@/payload-types";
+import { CategoriesGetManyOutput } from "@/modules/categories/types";
 import Link from "next/link";
 import React from "react";
 
 type Props = {
-  category: Category;
+  category: CategoriesGetManyOutput[1];
   isOpen: boolean;
   position: { top: number; left: number };
 };
 
 export const SubcategoryMenu = ({ category, isOpen, position }: Props) => {
-  const subcategories = (
-    category.subcategory &&
-    "docs" in category.subcategory &&
-    Array.isArray(category.subcategory.docs)
-      ? category.subcategory.docs
-      : []
-  ) as Category[];
-  if (!isOpen || !category.subcategory || subcategories.length < 0) {
+  if (
+    !isOpen ||
+    !category.subcategories ||
+    category.subcategories.length === 0
+  ) {
     return null;
   }
 
@@ -33,7 +30,7 @@ export const SubcategoryMenu = ({ category, isOpen, position }: Props) => {
           backgroundColor: category.color ?? "#f5f5f5",
         }}
       >
-        {subcategories.map((sub) => (
+        {category.subcategories.map((sub) => (
           <Link
             key={typeof sub === "string" ? sub : sub.id}
             href={`/${category.slug}/${sub.slug}`}
