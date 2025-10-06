@@ -80,11 +80,11 @@ export const Categories = ({ data }: Props) => {
       </div>
       {/* Actual visible categories */}
       <div
-        className="no-scrollbar relative min-h-20 w-screen overflow-x-scroll"
+        className="no-scrollbar relative min-h-18 w-screen overflow-x-scroll"
         ref={containerRef}
       >
         <div
-          className="absolute -bottom-0 left-0 flex min-h-16 flex-nowrap gap-4 pr-18"
+          className="absolute -bottom-1 left-0 flex min-h-16 flex-nowrap gap-4 pr-18"
           onMouseEnter={() => setIsAnyHovered(true)}
           onMouseLeave={() => setIsAnyHovered(false)}
         >

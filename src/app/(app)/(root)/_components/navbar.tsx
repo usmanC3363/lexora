@@ -85,7 +85,7 @@ export const Navbar = () => {
               "h-full min-h-[4.9rem] rounded-none border-t-0 border-r-0 border-b-0 border-l bg-black px-10 text-lg text-white transition-all duration-100 ease-linear hover:bg-cyan-300 hover:tracking-wide hover:text-black",
             )}
           >
-            <Link className="min-w-[5.5em]" prefetch href="/dashboard">
+            <Link className="min-w-[5.5em]" prefetch href="/admin">
               Dashboard
             </Link>
           </Button>
