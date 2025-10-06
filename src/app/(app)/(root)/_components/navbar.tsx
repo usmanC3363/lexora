@@ -2,17 +2,11 @@
 import { Button } from "@/components/ui/button";
 import { navLinks } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { Poppins } from "next/font/google";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import NavbarSidebar from "./navbar-sidebar";
 import { useState } from "react";
 import { MenuIcon } from "lucide-react";
-
-const poppins = Poppins({
-  weight: ["700"],
-  subsets: ["latin"],
-});
 
 interface NavbarItemProps {
   title: string;
@@ -57,12 +51,7 @@ export const Navbar = () => {
       className={`flex h-20 items-center justify-between gap-8 border-b bg-white font-medium`}
     >
       <Link href="/" className="pl-6">
-        <span
-          className={cn(
-            "text-5xl font-semibold tracking-tight",
-            poppins.className,
-          )}
-        >
+        <span className={cn("text-5xl font-semibold tracking-tight")}>
           Lexora
         </span>
       </Link>
@@ -90,7 +79,7 @@ export const Navbar = () => {
             "h-full min-h-[4.9rem] rounded-none border-t-0 border-r-0 border-b-0 border-l bg-white px-12 text-lg transition-colors hover:bg-pink-400",
           )}
         >
-          <Link className="" href="/sign-in">
+          <Link className="" prefetch href="/sign-in">
             Login
           </Link>
         </Button>
@@ -100,7 +89,7 @@ export const Navbar = () => {
             "h-full min-h-[4.9rem] rounded-none border-t-0 border-r-0 border-b-0 border-l bg-black px-12 text-lg text-white transition-colors hover:bg-pink-400 hover:text-black",
           )}
         >
-          <Link className="" href="/sign-up">
+          <Link className="" prefetch href="/sign-up">
             Start selling
           </Link>
         </Button>
