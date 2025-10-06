@@ -1,5 +1,4 @@
 "use client";
-import { Category } from "@/payload-types";
 import React, { useEffect, useRef, useState } from "react";
 import { CategoryDropdown } from "./category-dropdown";
 import { Button } from "@/components/ui/button";
@@ -7,10 +6,12 @@ import { cn } from "@/lib/utils";
 import { ListFilterIcon } from "lucide-react";
 import { CategoriesSidebar } from "./categories-sidebar";
 import { CategoriesGetManyOutput } from "@/modules/categories/types";
+import { useParams } from "next/navigation";
 
 type Props = { data: CategoriesGetManyOutput };
 
 export const Categories = ({ data }: Props) => {
+  const params = useParams();
   const containerRef = useRef<HTMLDivElement>(null);
   const measureRef = useRef<HTMLDivElement>(null);
   const viewAllRef = useRef<HTMLDivElement>(null);
@@ -18,10 +19,12 @@ export const Categories = ({ data }: Props) => {
   const [visibleCount, setVisibleCount] = useState(data.length);
   const [isAnyHovered, setIsAnyHovered] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const activeCategory = "all";
+
+  const categoryParam = params.category as string | undefined;
+  const activeCategory = categoryParam || "all";
 
   const activeCategoryIndex = data.findIndex(
-    (cat: Category) => cat.slug === activeCategory,
+    (cat: CategoriesGetManyOutput[1]) => cat.slug === activeCategory,
   );
   const isActiveCategoryHidden =
     activeCategoryIndex > visibleCount && activeCategoryIndex !== -1;
@@ -61,11 +64,11 @@ export const Categories = ({ data }: Props) => {
 
       {/* Hidden categories for Ref measurement */}
       <div
-        className="pointer-events-none absolute flex opacity-0"
+        className="pointer-events-none absolute flex h-full opacity-0"
         style={{ position: "fixed", top: -9999, left: -9999 }}
         ref={measureRef}
       >
-        {data.map((category: Category) => (
+        {data.map((category: CategoriesGetManyOutput[1]) => (
           <div key={category.id}>
             <CategoryDropdown
               category={category}
@@ -77,34 +80,41 @@ export const Categories = ({ data }: Props) => {
       </div>
       {/* Actual visible categories */}
       <div
-        className="flex flex-nowrap gap-4"
+        className="no-scrollbar relative min-h-20 w-screen overflow-x-scroll"
         ref={containerRef}
-        onMouseEnter={() => setIsAnyHovered(true)}
-        onMouseLeave={() => setIsAnyHovered(false)}
       >
-        {data.slice(0, visibleCount).map((category: Category) => (
-          <div key={category.id}>
-            <CategoryDropdown
-              category={category}
-              isActive={activeCategory === category.slug}
-              isNavigationHovered={isAnyHovered}
-            />
-          </div>
-        ))}
+        <div
+          className="absolute -bottom-0 left-0 flex min-h-16 flex-nowrap gap-4 pr-18"
+          onMouseEnter={() => setIsAnyHovered(true)}
+          onMouseLeave={() => setIsAnyHovered(false)}
+        >
+          {data
+            .slice(0, visibleCount)
+            .map((category: CategoriesGetManyOutput[1]) => (
+              <div key={category.id}>
+                <CategoryDropdown
+                  category={category}
+                  isActive={activeCategory === category.slug}
+                  isNavigationHovered={isAnyHovered}
+                />
+              </div>
+            ))}
 
-        <div ref={viewAllRef} className="shrink-0">
-          <Button
-            className={cn(
-              "hover:border-primary h-11 rounded-full border-transparent bg-transparent px-4 text-black hover:bg-white",
-              isActiveCategoryHidden &&
-                !isAnyHovered &&
-                "border-primary bg-white",
-            )}
-            onClick={() => setIsSidebarOpen(true)}
-          >
-            View All
-            <ListFilterIcon className="ml-2" />
-          </Button>
+          <div ref={viewAllRef} className="shrink-0">
+            <Button
+              variant="elevated"
+              className={cn(
+                "hover:border-primary h-11 rounded-full border-transparent bg-transparent px-4 text-black hover:bg-white",
+                isActiveCategoryHidden &&
+                  !isAnyHovered &&
+                  "border-primary bg-white",
+              )}
+              onClick={() => setIsSidebarOpen(true)}
+            >
+              View All
+              <ListFilterIcon className="ml-2" />
+            </Button>
+          </div>
         </div>
       </div>
     </div>
