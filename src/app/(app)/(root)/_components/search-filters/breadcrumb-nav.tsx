@@ -22,23 +22,23 @@ const BreadcrumbNav = ({
 }: Props) => {
   if (!activeCategoryName || activeCategory === "all") return null;
   return (
-    <Breadcrumb>
+    <Breadcrumb className="pb-4 max-lg:py-4">
       <BreadcrumbList>
         {activeSubCategoryName ? (
           <>
             <BreadcrumbItem>
               <BreadcrumbLink
                 asChild
-                className="text-primary text-xl font-medium underline"
+                className="text-primary font-medium underline md:text-base lg:text-lg"
               >
                 <Link href={`${activeCategory}`}> {activeCategoryName}</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
-            <BreadcrumbSeparator className="text-primary text-lg font-medium">
+            <BreadcrumbSeparator className="text-primary font-medium md:text-base lg:text-lg">
               /
             </BreadcrumbSeparator>
             <BreadcrumbItem>
-              <BreadcrumbPage className="text-xl font-medium">
+              <BreadcrumbPage className="font-medium md:text-base lg:text-lg">
                 <Link href={`${activeSubCategoryName}`}>
                   {activeSubCategoryName}
                 </Link>
@@ -47,7 +47,7 @@ const BreadcrumbNav = ({
           </>
         ) : (
           <BreadcrumbItem>
-            <BreadcrumbPage className="text-xl font-medium">
+            <BreadcrumbPage className="font-medium md:text-base lg:text-lg">
               <Link href={`${activeCategory}`}> {activeCategoryName}</Link>
             </BreadcrumbPage>
           </BreadcrumbItem>
