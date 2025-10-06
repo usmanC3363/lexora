@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${dmSans.className} ${poppins.variable} font-poppins antialiased`}
+        className={`${dmSans.className} ${poppins.variable} font-poppins no-scrollbar overflow-hidden antialiased`}
       >
         <TRPCReactProvider>{children}</TRPCReactProvider>
         <Toaster />

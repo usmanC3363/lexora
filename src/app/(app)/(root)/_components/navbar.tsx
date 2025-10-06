@@ -82,10 +82,10 @@ export const Navbar = () => {
           <Button
             variant="secondary"
             className={cn(
-              "h-full min-h-[4.9rem] rounded-none border-t-0 border-r-0 border-b-0 border-l bg-black px-12 text-lg text-white transition-all duration-100 ease-linear hover:bg-cyan-300 hover:tracking-wide hover:text-black",
+              "h-full min-h-[4.9rem] rounded-none border-t-0 border-r-0 border-b-0 border-l bg-black px-10 text-lg text-white transition-all duration-100 ease-linear hover:bg-cyan-300 hover:tracking-wide hover:text-black",
             )}
           >
-            <Link className="" prefetch href="/dashboard">
+            <Link className="min-w-[5.5em]" prefetch href="/dashboard">
               Dashboard
             </Link>
           </Button>
