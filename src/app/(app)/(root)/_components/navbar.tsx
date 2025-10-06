@@ -1,12 +1,14 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { useQuery } from "@tanstack/react-query";
+import { usePathname } from "next/navigation";
+import { useTRPC } from "@/trpc/client";
 import { navLinks } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import NavbarSidebar from "./navbar-sidebar";
 import { useState } from "react";
 import { MenuIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface NavbarItemProps {
   title: string;
@@ -44,6 +46,9 @@ export const NavbarItem = ({
 };
 
 export const Navbar = () => {
+  const trpc = useTRPC();
+  const session = useQuery(trpc.auth.session.queryOptions());
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const pathname = usePathname();
   return (
@@ -71,29 +76,49 @@ export const Navbar = () => {
           />
         ))}
       </div>
-      <div className="hidden lg:flex">
-        <Button
-          variant="secondary"
-          className={cn(
-            // fix this issue currently using manual h- values for button, should adapt to full
-            "h-full min-h-[4.9rem] rounded-none border-t-0 border-r-0 border-b-0 border-l bg-white px-12 text-lg transition-colors hover:bg-pink-400",
-          )}
-        >
-          <Link className="" prefetch href="/sign-in">
-            Login
-          </Link>
-        </Button>
-        <Button
-          variant="secondary"
-          className={cn(
-            "h-full min-h-[4.9rem] rounded-none border-t-0 border-r-0 border-b-0 border-l bg-black px-12 text-lg text-white transition-colors hover:bg-pink-400 hover:text-black",
-          )}
-        >
-          <Link className="" prefetch href="/sign-up">
-            Start selling
-          </Link>
-        </Button>
-      </div>
+      {session.data?.user ? (
+        // dashboard button if signed In
+        <div className="hidden lg:flex">
+          <Button
+            variant="secondary"
+            className={cn(
+              "h-full min-h-[4.9rem] rounded-none border-t-0 border-r-0 border-b-0 border-l bg-black px-12 text-lg text-white transition-all duration-100 ease-linear hover:bg-cyan-300 hover:tracking-wide hover:text-black",
+            )}
+          >
+            <Link className="" prefetch href="/dashboard">
+              Dashboard
+            </Link>
+          </Button>
+        </div>
+      ) : (
+        // login and sign-up buttons if not signed in
+        <>
+          <div className="hidden lg:flex">
+            <Button
+              variant="secondary"
+              className={cn(
+                // fix this issue currently using manual h- values for button, should adapt to full
+                "h-full min-h-[4.9rem] rounded-none border-t-0 border-r-0 border-b-0 border-l bg-white px-12 text-lg transition-colors hover:bg-pink-400",
+              )}
+            >
+              <Link className="" prefetch href="/sign-in">
+                Login
+              </Link>
+            </Button>
+            <Button
+              variant="secondary"
+              className={cn(
+                "h-full min-h-[4.9rem] rounded-none border-t-0 border-r-0 border-b-0 border-l bg-black px-12 text-lg text-white transition-colors hover:bg-pink-400 hover:text-black",
+              )}
+            >
+              <Link className="" prefetch href="/sign-up">
+                Start selling
+              </Link>
+            </Button>
+          </div>
+        </>
+      )}
+      {/* Menu Icon */}
       <div className="flex lg:hidden">
         <Button
           variant="ghost"

@@ -1,8 +1,8 @@
 import { headers as getHeaders, cookies as getCookies } from "next/headers";
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
-import { AUTH_COOKIE } from "../constants";
 import { TRPCError } from "@trpc/server";
 import { loginSchema, registerSchema } from "../schemas";
+import { generateAuthCookies } from "../utils";
 
 export const authRouter = createTRPCRouter({
   session: baseProcedure.query(async ({ ctx }) => {
@@ -11,10 +11,6 @@ export const authRouter = createTRPCRouter({
     const session = await ctx.payload.auth({ headers });
 
     return session;
-  }),
-  logout: baseProcedure.mutation(async () => {
-    const cookies = await getCookies();
-    cookies.delete(AUTH_COOKIE);
   }),
 
   register: baseProcedure
@@ -71,15 +67,9 @@ export const authRouter = createTRPCRouter({
       });
     }
 
-    const cookies = await getCookies();
-    cookies.set({
-      name: AUTH_COOKIE,
+    await generateAuthCookies({
+      prefix: ctx.payload.config.cookiePrefix,
       value: data.token,
-      httpOnly: true,
-      path: "/",
-      // Ensure Cross-domain cookies sharing, like when users logs into main site and can auto login with their own store
-      // sameSite: none
-      // domain:
     });
 
     return data;
