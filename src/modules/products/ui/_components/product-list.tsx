@@ -10,9 +10,15 @@ export const ProductList = ({ category }: Props) => {
   const { data } = useSuspenseQuery(
     trpc.products.getMany.queryOptions({ category }),
   );
-  return <div>{JSON.stringify(data, null, 2)}</div>;
+  return (
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+      {data.docs.map((product) => (
+        <div key={product.id}>{product.name}</div>
+      ))}
+    </div>
+  );
 };
 
 export const ProductListSkeleton = () => {
-  return <div className="">Loading</div>;
+  return <div className="">Loading...</div>;
 };
