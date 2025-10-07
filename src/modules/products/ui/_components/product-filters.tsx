@@ -45,13 +45,12 @@ export const ProductFilters = () => {
         </button>
       </div>
       <ProductFilter title="Price" className="">
-        ad
-        {/* <PriceFilter
+        <PriceFilter
           minPrice={filters.minPrice}
           maxPrice={filters.maxPrice}
           onMinPriceChange={(value) => onChange("minPrice", value)}
           onMaxPriceChange={(value) => onChange("maxPrice", value)}
-        /> */}
+        />
       </ProductFilter>
     </div>
   );

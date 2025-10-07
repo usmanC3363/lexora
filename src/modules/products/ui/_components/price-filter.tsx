@@ -43,24 +43,26 @@ export const PriceFilter = ({
     const numericValue = e.target.value.replace(/[^0-9.]/g, "");
     onMaxPriceChange(numericValue);
   };
-  <div className="flex flex-col gap-2">
+  return (
     <div className="flex flex-col gap-2">
-      <Label className="text-base font-medium">Minimum Price</Label>
-      <Input
-        type="text"
-        placeholder="$0"
-        value={minPrice ? FormatAsCurrency(minPrice) : ""}
-        onChange={handleMinPriceChange}
-      />
+      <div className="flex flex-col gap-2">
+        <Label className="text-base font-medium">Minimum Price</Label>
+        <Input
+          type="text"
+          placeholder="$0"
+          value={minPrice ? FormatAsCurrency(minPrice) : ""}
+          onChange={handleMinPriceChange}
+        />
+      </div>
+      <div className="flex flex-col gap-2">
+        <Label className="text-base font-medium">Maximum Price</Label>
+        <Input
+          type="text"
+          placeholder="∞"
+          value={maxPrice ? FormatAsCurrency(maxPrice) : ""}
+          onChange={handleMaxPriceChange}
+        />
+      </div>
     </div>
-    <div className="flex flex-col gap-2">
-      <Label className="text-base font-medium">Maximum Price</Label>
-      <Input
-        type="text"
-        placeholder="∞"
-        value={maxPrice ? FormatAsCurrency(maxPrice) : ""}
-        onChange={handleMaxPriceChange}
-      />
-    </div>
-  </div>;
+  );
 };
