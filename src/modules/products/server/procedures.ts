@@ -8,11 +8,22 @@ export const productsRouter = createTRPCRouter({
     .input(
       z.object({
         category: z.string().nullable().optional(),
+        minPrice: z.string().nullable().optional(),
+        maxPrice: z.string().nullable().optional(),
       }),
     )
     // destructuring ctx and input
     .query(async ({ ctx, input }) => {
       const where: Where = {};
+
+      // Price Filters
+      if (input.minPrice) {
+        where.price = { greater_than_equal: input.minPrice };
+      }
+
+      if (input.maxPrice) {
+        where.price = { less_than_equal: input.maxPrice };
+      }
       if (input.category) {
         // Fetching categoriesData
         const categoriesData = await ctx.payload.find({
@@ -28,7 +39,7 @@ export const productsRouter = createTRPCRouter({
           ...doc,
           subcategories: (doc.subcategory?.docs ?? []).map((doc) => ({
             ...(doc as Category),
-            subcategory: undefined,
+            // subcategory: undefined,
           })),
         }));
         // the first and only one present in the array due to limit 1
@@ -40,10 +51,11 @@ export const productsRouter = createTRPCRouter({
               (subcategory) => subcategory.slug,
             ),
           );
+          // putting this here checks for parentCategory, rule "noUncheckedIndexedAccess" added in tsconfig, it solves obscure issue favicon.ico getting fetched like categories
+          where["category.slug"] = {
+            in: [parentCategory.slug, ...subcategoriesSlugs],
+          };
         }
-        where["category.slug"] = {
-          in: [parentCategory.slug, ...subcategoriesSlugs],
-        };
       }
 
       const data = await ctx.payload.find({

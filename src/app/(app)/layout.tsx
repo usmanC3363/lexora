@@ -1,14 +1,9 @@
 import type { Metadata } from "next";
-import { DM_Sans, Josefin_Sans, Poppins } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import "./globals.css";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { TRPCReactProvider } from "@/trpc/client";
 import { Toaster } from "@/components/ui/sonner";
-
-const poppins = Poppins({
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  subsets: ["latin"],
-  variable: "--font-poppins",
-});
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -29,10 +24,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${dmSans.className} ${poppins.variable} font-poppins no-scrollbar overflow-hidden antialiased`}
+        className={`${dmSans.className} no-scrollbar overflow-hidden antialiased`}
       >
-        <TRPCReactProvider>{children}</TRPCReactProvider>
-        <Toaster />
+        {/* Nuqs helps with Params or so */}
+        <NuqsAdapter>
+          <TRPCReactProvider>{children}</TRPCReactProvider>
+          <Toaster />
+        </NuqsAdapter>
       </body>
     </html>
   );
