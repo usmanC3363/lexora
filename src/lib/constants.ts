@@ -20,3 +20,5 @@ export const navLinks = [
     href: "/contact",
   },
 ];
+
+export const DEFAULT_LIMIT = 8;
