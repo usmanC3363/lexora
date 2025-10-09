@@ -22,9 +22,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="no-scrollbar">
       <body
-        className={`${dmSans.className} no-scrollbar overflow-hidden antialiased`}
+        className={`${dmSans.className} no-scrollbar overflow-x-hidden overflow-y-scroll antialiased`}
       >
         {/* Nuqs helps with Params or so */}
         <NuqsAdapter>

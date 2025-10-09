@@ -1,10 +1,7 @@
-import { ChangeEvent } from "react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useTRPC } from "@/trpc/client";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { DEFAULT_LIMIT } from "@/lib/constants";
-import { Loader2, LoaderIcon } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 
 interface TagsFilterProps {
@@ -14,7 +11,7 @@ interface TagsFilterProps {
 
 export const TagsFilter = ({ value, onChange }: TagsFilterProps) => {
   const trpc = useTRPC();
-  const { data, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } =
+  const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useInfiniteQuery(
       trpc.tags.getMany.infiniteQueryOptions(
         { limit: DEFAULT_LIMIT },
@@ -64,7 +61,7 @@ export const TagsFilter = ({ value, onChange }: TagsFilterProps) => {
         <button
           type="button"
           disabled={isFetchingNextPage}
-          onClick={() => {}}
+          onClick={() => fetchNextPage()}
           className="justify-start text-start font-medium underline disabled:opacity-50"
         >
           Load More
