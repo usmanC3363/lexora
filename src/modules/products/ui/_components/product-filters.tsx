@@ -65,7 +65,7 @@ export const ProductFilters = () => {
           </button>
         )} */}
         <button
-          className={`cursor-pointer underline transition-all duration-150 ease-linear ${hasAnyFilters ? "" : "pointer-events-none translate-x-40 opacity-0"}`}
+          className={`cursor-pointer underline transition-all duration-150 ease-linear ${hasAnyFilters ? "" : "pointer-events-none translate-y-18 opacity-0"}`}
           onClick={() => onClear()}
           type="button"
         >
