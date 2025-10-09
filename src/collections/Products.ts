@@ -23,19 +23,17 @@ export const Products: CollectionConfig = {
         description: "Price in $USD",
       },
     },
-    // {
-    //   name: "slug",
-    //   type: "text",
-    //   required: true,
-    //   unique: true,
-    //   index: true,
-    // },
-
     {
       name: "category",
       type: "relationship",
       relationTo: "categories",
       hasMany: false,
+    },
+    {
+      name: "tags",
+      type: "relationship",
+      relationTo: "tags",
+      hasMany: true,
     },
     {
       name: "image",

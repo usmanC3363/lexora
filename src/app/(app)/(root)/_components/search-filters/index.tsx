@@ -30,7 +30,7 @@ export const SearchFilters = () => {
 
   return (
     <div
-      className="flex w-full flex-col border-b px-4 pt-8 lg:px-12"
+      className="flex w-full flex-col border-b px-4 py-8 lg:px-12 lg:pb-0"
       style={{ backgroundColor: activeCategoryColor }}
     >
       <SearchInput />
