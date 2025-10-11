@@ -3,7 +3,7 @@ import { ProductSort } from "../_components/product-sort";
 import { ProductFilters } from "../_components/product-filters";
 import { ProductList, ProductListSkeleton } from "../_components/product-list";
 
-type Props = { category: string };
+type Props = { category?: string };
 
 export const ProductListView = ({ category }: Props) => {
   return (

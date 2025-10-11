@@ -16,14 +16,53 @@ export const authRouter = createTRPCRouter({
   register: baseProcedure
     .input(registerSchema)
     .mutation(async ({ input, ctx }) => {
+      const existingData = await ctx.payload.find({
+        collection: "users",
+        limit: 1,
+        where: {
+          username: {
+            equals: input.username,
+          },
+        },
+        // data: {
+        //   email: input.email,
+        //   username: input.username,
+        //   password: input.password, //hashed by payload automatically
+        // },
+      });
+
+      const existingUser = existingData.docs[0];
+      if (existingUser) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Username already taken",
+        });
+      }
+
+      const tenant = await ctx.payload.create({
+        collection: "tenants",
+        data: {
+          name: input.username,
+          slug: input.username,
+          stripeAccoutId: "test",
+        },
+      });
+
       await ctx.payload.create({
         collection: "users",
         data: {
           email: input.email,
           username: input.username,
           password: input.password, //hashed by payload automatically
+          // has to be an array, allows for 1 user to have multiple stores
+          tenants: [
+            {
+              tenant: tenant.id,
+            },
+          ],
         },
       });
+
       const data = await ctx.payload.login({
         collection: "users",
         data: {
@@ -39,15 +78,9 @@ export const authRouter = createTRPCRouter({
         });
       }
 
-      const cookies = await getCookies();
-      cookies.set({
-        name: AUTH_COOKIE,
+      await generateAuthCookies({
+        prefix: ctx.payload.config.cookiePrefix,
         value: data.token,
-        httpOnly: true,
-        path: "/",
-        // Ensure Cross-domain cookies sharing, like when users logs into main site and can auto login with their own store
-        // sameSite: none
-        // domain:
       });
     }),
 
