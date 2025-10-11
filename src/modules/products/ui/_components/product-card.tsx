@@ -1,15 +1,19 @@
-import { StarIcon } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+"use client";
+
 import React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { StarIcon } from "lucide-react";
+import { generateTenantURL } from "@/lib/utils";
 
 type ProductCardProps = {
   id: string;
   name: string;
   description?: string | null;
   imageUrl?: string | null;
-  authorUsername: string;
-  authorImageUrl?: string | null;
+  tenantSlug: string;
+  tenantImageUrl?: string | null;
   reviewRating: number;
   reviewCount: number;
   price: number;
@@ -20,15 +24,24 @@ const ProductCard = ({
   name,
   description,
   imageUrl,
-  authorUsername,
-  authorImageUrl,
+  tenantSlug,
+  tenantImageUrl,
   reviewRating,
   reviewCount,
   price,
 }: ProductCardProps) => {
+  const router = useRouter();
+
+  const handleUserClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    router.push(generateTenantURL(tenantSlug));
+  };
+
   return (
     <Link href={`/products/${id}`}>
-      <div className="flex h-full flex-col justify-between gap-y-4 overflow-hidden rounded-md border bg-white p-4 transition-shadow hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+      <div className="flex h-full flex-col justify-between gap-y-4 overflow-hidden rounded-md border bg-white p-4 transition-shadow hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] lg:min-w-72">
         {/* PRODUCT IMAGE */}
         <div className="relative h-44">
           <Image
@@ -39,38 +52,56 @@ const ProductCard = ({
           />
         </div>
 
-        <div className="flex flex-1 flex-col gap-y-3">
-          <div className="flex flex-col gap-y-0">
-            <h2 className="line-clamp-4 min-h-14 text-lg font-semibold">
+        {/* PRODUCT CONTENT MAIN DIV */}
+        <div className="flex flex-1 flex-col justify-between gap-y-6">
+          <div className="flex flex-col gap-y-2.5">
+            {/* PRODUCT NAME */}
+
+            <h2 className="line-clamp-1 text-lg leading-[140%] font-semibold">
               {name}
             </h2>
-            <p className="text-sm">{description}</p>
-          </div>
-          <div className="" onClick={() => {}}>
-            {authorImageUrl && (
-              <Image
-                src={authorImageUrl || ""}
-                alt={authorUsername}
-                width={16}
-                height={16}
-                className="rounded-sm object-cover"
-              />
-            )}
-            <p className="text-sm font-semibold capitalize underline">
-              {authorUsername}
-            </p>
+            {/* PRODUCT DESCRIPTION */}
+            <p className="line-clamp-3 text-sm">{description}</p>
           </div>
 
-          {reviewCount > 0 && (
-            <div className="flex items-center gap-1">
-              <StarIcon className="size-3.5 fill-black" />
-              <p className="text-sm font-medium">
-                {reviewRating} ({reviewCount})
-              </p>
+          {/* PRODUCT tenantSlug & Image, Review count Div */}
+          <div className="flex flex-col gap-2">
+            {/* PRODUCT tenantSlug & Image Div */}
+            <div
+              className="group flex w-fit items-center gap-3"
+              onClick={handleUserClick}
+            >
+              <div className="flex w-fit gap-2.5">
+                {tenantImageUrl && (
+                  <Image
+                    src={tenantImageUrl}
+                    alt={tenantSlug}
+                    width={32}
+                    height={32}
+                    className="h-8 w-8 rounded-full object-cover"
+                  />
+                )}
+              </div>
+              <div className="flex flex-col gap-0.5">
+                {/* PRODUCT tenantSlug */}
+                <p className="text-sm font-medium capitalize underline transition-all ease-linear group-hover:tracking-wide">
+                  {tenantSlug}
+                </p>
+                {reviewCount > 0 && (
+                  <div className="flex items-center gap-1">
+                    <StarIcon className="size-3.5 fill-black" />
+                    <p className="text-sm font-medium">
+                      {reviewRating} ({reviewCount})
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
-          )}
-        </div>
 
+            {/* TenantName & Image Div */}
+          </div>
+        </div>
+        {/* PRODUCT PRICE */}
         <div className="border-t pt-4 pb-2">
           <div className="relative w-fit bg-pink-400 px-3 py-1">
             <p className="text-sm font-medium">
