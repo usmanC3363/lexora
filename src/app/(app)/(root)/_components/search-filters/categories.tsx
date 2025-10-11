@@ -80,7 +80,7 @@ export const Categories = ({ data }: Props) => {
       </div>
       {/* Actual visible categories */}
       <div
-        className="no-scrollbar relative min-h-18 w-screen overflow-x-scroll"
+        className="no-scrollbar relative z-100 min-h-18 w-screen"
         ref={containerRef}
       >
         <div

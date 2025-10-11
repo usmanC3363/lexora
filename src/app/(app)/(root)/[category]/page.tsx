@@ -4,6 +4,7 @@ import { SearchParams } from "nuqs/server";
 import React from "react";
 import { loadProductFilers } from "@/modules/products/search-params";
 import { ProductListView } from "@/modules/products/ui/views/product-list-view";
+import { DEFAULT_LIMIT } from "@/lib/constants";
 
 type Props = {
   params: Promise<{
@@ -17,8 +18,12 @@ const Page = async ({ params, searchParams }: Props) => {
   const filters = await loadProductFilers(searchParams);
   // const plainFilters = JSON.parse(JSON.stringify(filters));
   const queryClient = getQueryClient();
-  void queryClient.prefetchQuery(
-    trpc.products.getMany.queryOptions({ category, ...filters }),
+  void queryClient.prefetchInfiniteQuery(
+    trpc.products.getMany.infiniteQueryOptions({
+      ...filters,
+      category,
+      limit: DEFAULT_LIMIT,
+    }),
   );
 
   return (

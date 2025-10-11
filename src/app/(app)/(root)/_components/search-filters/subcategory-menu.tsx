@@ -5,10 +5,9 @@ import React from "react";
 type Props = {
   category: CategoriesGetManyOutput[1];
   isOpen: boolean;
-  position: { top: number; left: number };
 };
 
-export const SubcategoryMenu = ({ category, isOpen, position }: Props) => {
+export const SubcategoryMenu = ({ category, isOpen }: Props) => {
   if (
     !isOpen ||
     !category.subcategories ||
@@ -18,12 +17,9 @@ export const SubcategoryMenu = ({ category, isOpen, position }: Props) => {
   }
 
   return (
-    <div
-      className="fixed z-100"
-      style={{ top: position.top, left: position.left }}
-    >
+    <div className="absolute top-[100%] left-0 z-100">
       {/*invisible gap between submenu and button  */}
-      <div className="h-3 w-56" />
+      <div className="pointer-events-none h-3 w-56 opacity-0" />
       <div
         className="flex h-fit w-56 translate-x-[2px] translate-y-[2px] flex-col gap-y-3 overflow-hidden rounded-md border px-4 pt-4 pb-8 text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] transition-all duration-200 ease-in-out"
         style={{
