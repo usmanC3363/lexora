@@ -5,7 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { StarIcon } from "lucide-react";
-import { generateTenantURL } from "@/lib/utils";
+import { formatCurrency, generateTenantURL } from "@/lib/utils";
+
+{
+  /* WIP: Add real ratings */
+}
 
 type ProductCardProps = {
   id: string;
@@ -40,7 +44,7 @@ const ProductCard = ({
   };
 
   return (
-    <Link href={`/products/${id}`}>
+    <Link href={`${generateTenantURL(tenantSlug)}/products/${id}`}>
       <div className="flex h-full flex-col justify-between gap-y-4 overflow-hidden rounded-md border bg-white p-4 transition-shadow hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] lg:min-w-72">
         {/* PRODUCT IMAGE */}
         <div className="relative h-44">
@@ -103,14 +107,8 @@ const ProductCard = ({
         </div>
         {/* PRODUCT PRICE */}
         <div className="border-t pt-4 pb-2">
-          <div className="relative w-fit bg-pink-400 px-3 py-1">
-            <p className="text-sm font-medium">
-              {new Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "USD",
-                maximumFractionDigits: 0,
-              }).format(Number(price))}
-            </p>
+          <div className="relative w-fit rounded-[2px] bg-pink-400 px-3 py-1">
+            <p className="text-sm font-medium">{formatCurrency(price)}</p>
           </div>
         </div>
       </div>
