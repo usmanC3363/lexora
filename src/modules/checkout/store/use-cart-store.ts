@@ -10,7 +10,7 @@ interface CartState {
   tenantCarts: Record<string, TenantCart>;
   addProduct: (tenantSlug: string, productId: string) => void;
   removeProduct: (tenantSlug: string, productId: string) => void;
-  clearCart: (tenantSlug: string, productId: string) => void;
+  clearCart: (tenantSlug: string) => void;
   clearAllCarts: () => void;
   getCartbyTenant: (tenantSlug: string) => string[];
 }
