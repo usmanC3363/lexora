@@ -2,19 +2,38 @@
 import { StarRating } from "@/components/star-rating";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Tooltip } from "@/components/ui/tooltip";
 import { formatCurrency, generateTenantURL } from "@/lib/utils";
+
+import dynamic from "next/dynamic";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { LinkIcon, StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+// import { CartButton } from "../_components/cart-button";
 
 interface ProductViewProps {
   productId: string;
   tenantSlug: string;
 }
+
+const CartButton = dynamic(
+  () => import("../_components/cart-button").then((mod) => mod.CartButton),
+  {
+    ssr: false,
+    loading: () => (
+      <Button
+        variant="elevated"
+        className={`flex-1 bg-pink-400`}
+        //   WIP may cause error
+        disabled={true}
+      >
+        Add to Cart
+      </Button>
+    ),
+  },
+);
 export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
   const trpc = useTRPC();
   const { data } = useSuspenseQuery(
@@ -100,9 +119,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
               <div className="flex flex-col gap-4 border-b p-6">
                 {/* ACTION BUTTONS */}
                 <div className="flex items-center gap-2">
-                  <Button variant="elevated" className="flex-1 bg-pink-400">
-                    Add to Cart
-                  </Button>
+                  <CartButton productId={productId} tenantSlug={tenantSlug} />
                   <Button
                     variant="elevated"
                     className="size-12"
