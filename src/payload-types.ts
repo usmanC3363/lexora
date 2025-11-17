@@ -172,7 +172,7 @@ export interface Tenant {
    */
   slug: string;
   image?: (string | null) | Media;
-  stripeAccoutId: string;
+  stripeAccoutId?: string | null;
   /**
    * You can't create products until you submit Stripe details.
    */
