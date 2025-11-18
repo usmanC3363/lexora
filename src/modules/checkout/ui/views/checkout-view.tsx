@@ -1,8 +1,9 @@
 "use client";
 
 import { useTRPC } from "@/trpc/client";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useCart } from "../../hooks/use-cart";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { CheckoutItem } from "../_components/checkout-item";
@@ -10,25 +11,57 @@ import { generateTenantURL } from "@/lib/utils";
 import { CheckoutSidebar } from "../_components/checkout-sidebar";
 import { InboxIcon, Loader2 } from "lucide-react";
 import { paddingWrapper } from "@/lib/constants";
+import { useCheckoutStates } from "../../hooks/use-checkout-state";
 
 interface CheckoutViewProps {
   tenantSlug: string;
 }
 export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
-  const { productIds, clearAllCarts, removeProduct } = useCart(tenantSlug);
+  const [states, setStates] = useCheckoutStates();
+  const router = useRouter();
+  const { productIds, clearCart, clearAllCarts, removeProduct } =
+    useCart(tenantSlug);
   const trpc = useTRPC();
   const { data, error, isLoading } = useQuery(
     trpc.checkout.getProducts.queryOptions({
       ids: productIds,
     }),
   );
+
+  const purchase = useMutation(
+    trpc.checkout.purchase.mutationOptions({
+      onMutate: () => {
+        setStates({ success: false, cancel: false });
+      },
+      onSuccess: (data) => {
+        window.location.href = data.url;
+      },
+      onError: (error) => {
+        if (error.data?.code === "UNAUTHORIZED") {
+          // WIP: modify when subdomains are enabled
+          router.push("/sign-in");
+        }
+        toast.error(error.message);
+      },
+    }),
+  );
   // WIP, may improve this error
   useEffect(() => {
     if (error?.data?.code === "NOT_FOUND") {
-      clearAllCarts();
+      clearCart();
       toast.warning("Invalid products found, Cart cleared");
     }
-  }, [error, clearAllCarts]);
+  }, [error, clearCart]);
+
+  useEffect(() => {
+    if (states.success) {
+      // this prevents a loop error, need to chk further
+      setStates({ success: false, cancel: false });
+      clearCart();
+      // WIP: Invalidate library
+      router.push("/products");
+    }
+  }, [states.success, clearCart, router, setStates]);
   if (isLoading) {
     return (
       <div className={`${paddingWrapper}`}>
@@ -76,9 +109,9 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
           <CheckoutSidebar
             // WIP On removing a product, this causes causes the loading animation again, bad UX
             total={data?.totalPrice || 0}
-            onCheckout={() => {}}
-            isCanceled={true}
-            isPending={false}
+            onPurchase={() => purchase.mutate({ tenantSlug, productIds })}
+            isCanceled={states.cancel}
+            isPending={purchase.isPending}
           />
         </div>
       </div>

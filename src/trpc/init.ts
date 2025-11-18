@@ -1,7 +1,8 @@
-import SuperJSON from "superjson";
-import { initTRPC } from "@trpc/server";
+import superjson from "superjson";
+import { initTRPC, TRPCError } from "@trpc/server";
 import { cache } from "react";
 import { getPayload } from "payload";
+import { headers as getHeaders } from "next/headers";
 import configPromise from "@payload-config";
 export const createTRPCContext = cache(async () => {
   /**
@@ -17,7 +18,7 @@ const t = initTRPC.create({
   /**
    * @see https://trpc.io/docs/server/data-transformers
    */
-  transformer: SuperJSON,
+  transformer: superjson,
 });
 // Base router and procedure helpers
 export const createTRPCRouter = t.router;
@@ -28,4 +29,26 @@ export const baseProcedure = t.procedure.use(async ({ next }) => {
   });
 
   return next({ ctx: { payload } });
+});
+
+export const protectedProcedure = baseProcedure.use(async ({ ctx, next }) => {
+  const headers = await getHeaders();
+  const session = await ctx.payload.auth({ headers });
+
+  if (!session.user) {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "Not Authorized",
+    });
+  }
+  // spreading for type inference
+  return next({
+    ctx: {
+      ...ctx,
+      session: {
+        ...session,
+        user: session.user,
+      },
+    },
+  });
 });
