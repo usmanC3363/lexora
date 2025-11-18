@@ -1,8 +1,8 @@
-import { cn } from "@/lib/utils";
+import { cn, formatCurrency } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
 
 interface CheckoutItemProps {
-  id: string;
   name: string;
   productUrl: string;
   tenantName: string;
@@ -14,7 +14,6 @@ interface CheckoutItemProps {
   isLast?: boolean;
 }
 export const CheckoutItem = ({
-  id,
   isLast,
   imageUrl,
   imgAlt,
@@ -33,18 +32,42 @@ export const CheckoutItem = ({
       )}
     >
       <div className="overflow-hidden border-r">
-        <div className="relative aspect-square h-full w-full">
+        <div className="relative aspect-square h-full">
           <Image
             src={imageUrl || "./placeholder.png"}
-            alt={imgAlt || ""}
+            alt={imgAlt || name}
             fill
             className="object-cover"
           />
         </div>
       </div>
-      <div className="">
-        <p className="font-semibold">{name}</p>
-        <p className="text-sm underline underline-offset-2">{tenantName}</p>
+      <div className="flex flex-col justify-between py-4">
+        <div className="">
+          <Link href={productUrl}>
+            <h4 className="font-bold underline">{name}</h4>
+          </Link>
+          <Link href={tenantUrl}>
+            <p className="font-medium underline">{tenantName}</p>
+          </Link>
+        </div>
+      </div>
+      <div className="flex min-w-[5.75rem] flex-col justify-between py-4">
+        <p className="font-medium">{formatCurrency(price)}</p>
+        <button
+          className="group flex cursor-pointer items-center"
+          type="button"
+          onClick={onRemove}
+        >
+          <span
+            className="text-red-500 transition-all duration-100 ease-linear group-hover:scale-[1.15]"
+            style={{ transformOrigin: "center" }}
+          >
+            ✗{" "}
+          </span>
+          <span className="pl-[7px] font-medium underline underline-offset-3 transition-all duration-100 ease-linear group-hover:pl-[9px] group-hover:text-base group-hover:text-red-500">
+            Remove
+          </span>
+        </button>
       </div>
     </div>
   );
