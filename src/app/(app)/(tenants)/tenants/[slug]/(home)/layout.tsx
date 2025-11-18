@@ -1,9 +1,11 @@
 import React, { Suspense } from "react";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getQueryClient, trpc } from "@/trpc/server";
-import { loadProductFilers } from "@/modules/products/search-params";
-import { Navbar, NavbarSkeleton } from "../../../_components/navbar";
-import { Footer } from "../../../_components/footer";
+import {
+  Navbar,
+  NavbarSkeleton,
+} from "@/modules/tenants/ui/_components/navbar";
+import { Footer } from "@/modules/tenants/ui/_components/footer";
 
 type Props = {
   children: React.ReactNode;
