@@ -32,14 +32,14 @@ export const CategoryDropdown = ({
         {/* Button */}
         <Button
           asChild
-          variant="elevated"
+          variant="ogelevated"
           className={cn(
             "hover:border-primary h-11 rounded-full border-transparent bg-transparent px-4 text-black hover:bg-white",
             isActive &&
               !isNavigationHovered &&
-              "border-primary translate-x-[4px] translate-y-[4px] bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]",
+              "border-primary translate-y-[-2.5px] bg-white shadow-[0px_3.5px_0px_0px_rgba(0,0,0,1)]",
             isOpen &&
-              "border-primary translate-x-[4px] translate-y-[4px] bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]",
+              "border-primary translate-y-[-2.5px] bg-white shadow-[0px_3.5px_0px_0px_rgba(0,0,0,1)]",
           )}
         >
           <Link href={`/${category.slug === "all" ? "" : category.slug}`}>
