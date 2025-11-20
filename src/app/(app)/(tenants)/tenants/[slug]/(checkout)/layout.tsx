@@ -15,7 +15,9 @@ const CheckoutLayout = async ({ children, params }: Props) => {
     <div className="flex min-h-screen flex-col bg-[#F4F4F0]">
       <Navbar slug={slug} />
       <div className="flex-1">
-        <div className="mx-auto max-w-(--breakpoint-xl)">{children}</div>
+        <div className="mx-auto max-w-(--breakpoint-xl) 2xl:max-w-(--breakpoint-2xl)">
+          {children}
+        </div>
       </div>
       <Footer />
     </div>

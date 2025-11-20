@@ -38,7 +38,7 @@ export const Navbar = ({ slug }: Props) => {
 
   return (
     <nav className="h-20 border-b bg-white font-medium">
-      <div className="mx-auto flex h-full max-w-(--breakpoint-xl) items-center justify-between px-4 lg:px-12">
+      <div className="mx-auto flex h-full max-w-(--breakpoint-xl) items-center justify-between px-4 lg:px-12 2xl:max-w-(--breakpoint-2xl)">
         <Link href={generateTenantURL(slug)}>
           {data.image?.url && (
             <Image
@@ -60,7 +60,7 @@ export const Navbar = ({ slug }: Props) => {
 export const NavbarSkeleton = () => {
   return (
     <nav className="h-20 border-b bg-white font-medium">
-      <div className="mx-auto flex h-full max-w-(--breakpoint-xl) items-center justify-between px-4 lg:px-12">
+      <div className="mx-auto flex h-full max-w-(--breakpoint-xl) items-center justify-between px-4 lg:px-12 2xl:max-w-(--breakpoint-2xl)">
         <div />
         <Button
           className={`bg-white`}
