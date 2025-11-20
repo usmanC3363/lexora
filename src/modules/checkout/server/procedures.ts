@@ -9,7 +9,6 @@ import type Stripe from "stripe";
 import z from "zod";
 import { CheckoutMetadata, ProductMetadata } from "../types";
 import { stripe } from "@/lib/stripe";
-import { generateTenantURL } from "@/lib/utils";
 
 export const checkoutRouter = createTRPCRouter({
   purchase: protectedProcedure
