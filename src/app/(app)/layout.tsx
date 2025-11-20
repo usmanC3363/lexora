@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="no-scrollbar">
+    <html lang="en" className="no-scrollbar antialiased">
       <body
         className={`${dmSans.className} no-scrollbar overflow-x-hidden overflow-y-scroll antialiased`}
       >
