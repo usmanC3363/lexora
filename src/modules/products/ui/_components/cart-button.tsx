@@ -1,13 +1,30 @@
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/modules/checkout/hooks/use-cart";
+import Link from "next/link";
 
 interface Props {
   tenantSlug: string;
   productId: string;
+  isPurchased?: boolean;
 }
 
-export const CartButton = ({ tenantSlug, productId }: Props) => {
+export const CartButton = ({ tenantSlug, productId, isPurchased }: Props) => {
   const cart = useCart(tenantSlug);
+
+  if (isPurchased)
+    return (
+      <Button
+        variant="elevated"
+        className={`flex-1 bg-[#FFCAB0] font-medium`}
+        //   WIP may cause error
+        asChild
+        disabled={false}
+      >
+        <Link prefetch href={`/library/${productId}`}>
+          View in Library
+        </Link>
+      </Button>
+    );
 
   return (
     <Button
