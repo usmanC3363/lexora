@@ -12,13 +12,12 @@ interface CartState {
   removeProduct: (tenantSlug: string, productId: string) => void;
   clearCart: (tenantSlug: string) => void;
   clearAllCarts: () => void;
-  getCartbyTenant: (tenantSlug: string) => string[];
 }
 
 export const useCartStore = create<CartState>()(
   // persist method
   persist(
-    (set, get) => ({
+    (set) => ({
       tenantCarts: {},
       addProduct: (tenantSlug, productId) =>
         set((state) => ({
@@ -56,8 +55,6 @@ export const useCartStore = create<CartState>()(
           },
         })),
       clearAllCarts: () => set({ tenantCarts: {} }),
-      getCartbyTenant: (tenantSlug) =>
-        get().tenantCarts[tenantSlug]?.productIds || [],
     }),
     // cart saved in window.localStorage global
     { name: "lexora-cart", storage: createJSONStorage(() => localStorage) },
