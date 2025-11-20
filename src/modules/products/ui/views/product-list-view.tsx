@@ -11,7 +11,7 @@ export const ProductListView = ({
   narrowView,
 }: Props) => {
   return (
-    <div className="flex flex-col gap-4 px-4 py-8 lg:px-12">
+    <div className="flex flex-col gap-y-4 px-4 py-8 lg:px-12 2xl:gap-y-8">
       <div className="flex flex-col justify-between gap-y-2 lg:flex-row lg:items-center lg:gap-y-0">
         <p className="text-2xl font-medium">Curated for you</p>
         <ProductSort />

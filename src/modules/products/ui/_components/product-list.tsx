@@ -42,7 +42,7 @@ export const ProductList = ({ category, tenantSlug, narrowView }: Props) => {
     <>
       <div
         className={cn(
-          `grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4`,
+          `grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3`,
           narrowView && "lg:grid-cols-2 xl:grid-cols-3",
         )}
       >
@@ -84,7 +84,7 @@ export const ProductListSkeleton = ({ narrowView }: Props) => {
   return (
     <div
       className={cn(
-        `grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4`,
+        `grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3`,
         narrowView && "lg:grid-cols-2 xl:grid-cols-3",
       )}
     >
