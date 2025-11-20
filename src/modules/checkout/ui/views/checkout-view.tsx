@@ -19,8 +19,7 @@ interface CheckoutViewProps {
 export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
   const [states, setStates] = useCheckoutStates();
   const router = useRouter();
-  const { productIds, clearCart, clearAllCarts, removeProduct } =
-    useCart(tenantSlug);
+  const { productIds, clearCart, removeProduct } = useCart(tenantSlug);
   const trpc = useTRPC();
   const { data, error, isLoading } = useQuery(
     trpc.checkout.getProducts.queryOptions({
@@ -55,8 +54,8 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
 
   useEffect(() => {
     if (states.success) {
-      // this prevents a loop error, need to chk further
-      setStates({ success: false, cancel: false });
+      // this prevents a loop error, but not suitable
+      // setStates({ success: false, cancel: false });
       clearCart();
       // WIP: Invalidate library
       router.push("/products");
