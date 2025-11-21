@@ -1,11 +1,9 @@
 "use client";
-import { ArrowLeftIcon } from "lucide-react";
-import Link from "next/link";
-import { ProductList, ProductListSkeleton } from "../_components/product-list";
-import { Suspense } from "react";
+
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { BackButton } from "@/components/back-button";
+import { ReviewSidebar } from "@/modules/library/ui/_components/review-sidebar";
 
 interface ProductViewProps {
   productId: string;
@@ -20,7 +18,9 @@ export const ProductView = ({ productId }: ProductViewProps) => {
 
   return (
     <div className="min-h-screen bg-white">
-      <BackButton text="Back to Library" ArrowClass="size-[18px]" />
+      <div className="w-full max-w-(--breakpoint-xl) border-b bg-[#F4F4F0] px-4 lg:px-12 2xl:max-w-(--breakpoint-2xl)">
+        <BackButton text="Back to Library" ArrowClass="size-[18px]" />
+      </div>
       <header className="border-b bg-[#F4F4F0] py-8">
         <div className="mx-auto max-w-(--breakpoint-xl) px-4 lg:px-12 2xl:max-w-(--breakpoint-2xl)">
           <h1 className="text-[40px] font-medium">{data.name}</h1>
@@ -30,7 +30,7 @@ export const ProductView = ({ productId }: ProductViewProps) => {
         <div className="grid grid-cols-1 gap-y-6 lg:grid-cols-7 lg:gap-x-16">
           <div className="lg:col-span-2">
             <div className="gap-4 rounded-md border bg-white p-4">
-              WIP Review Sidebar
+              <ReviewSidebar productId={productId} />
             </div>
           </div>
           <div className="lg:col-span-5">

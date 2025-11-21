@@ -14,7 +14,7 @@ export const BackButton = ({
   ArrowClass,
 }: BackButtonProps) => {
   return (
-    <nav className={cn("group w-fit border-b bg-[#F4F4F0] p-4", className)}>
+    <nav className={cn("group w-fit bg-[#F4F4F0] p-4", className)}>
       <Link prefetch href={`/library`} className="flex items-center gap-3">
         <ArrowLeftIcon
           className={cn(
