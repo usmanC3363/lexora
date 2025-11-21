@@ -56,7 +56,7 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
   useEffect(() => {
     if (states.success) {
       // this prevents a loop error, but not suitable
-      setStates({ success: false, cancel: false });
+      // setStates({ success: false, cancel: false });
       clearCart();
       queryClient.invalidateQueries(trpc.library.getMany.infiniteQueryFilter());
       router.push("/library");

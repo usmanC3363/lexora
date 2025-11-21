@@ -30,7 +30,7 @@ export const ProductView = ({ productId }: ProductViewProps) => {
         <div className="grid grid-cols-1 gap-y-6 lg:grid-cols-7 lg:gap-x-16">
           <div className="lg:col-span-2">
             <div className="gap-4 rounded-md border bg-white p-4">
-              {/* WIP Review Sidebar */}
+              WIP Review Sidebar
             </div>
           </div>
           <div className="lg:col-span-5">
