@@ -32,7 +32,7 @@ const ProductCard = ({
   reviewCount,
 }: ProductCardProps) => {
   return (
-    <Link href={`/library/${id}`}>
+    <Link prefetch href={`/library/${id}`}>
       <div className="flex h-full flex-col justify-between gap-y-4 overflow-hidden rounded-md border bg-white p-4 transition-shadow hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] lg:min-w-72">
         {/* PRODUCT IMAGE */}
         <div className="relative h-44">
@@ -86,11 +86,8 @@ const ProductCard = ({
                 )}
               </div>
             </div>
-
-            {/* TenantName & Image Div */}
           </div>
         </div>
-        {/* PRODUCT PRICE */}
       </div>
     </Link>
   );
