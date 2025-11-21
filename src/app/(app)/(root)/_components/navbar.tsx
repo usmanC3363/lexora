@@ -96,6 +96,7 @@ export const Navbar = () => {
           <div className="hidden lg:flex">
             <Button
               variant="secondary"
+              asChild
               className={cn(
                 // fix this issue currently using manual h- values for button, should adapt to full
                 "h-full min-h-[4.9rem] rounded-none border-t-0 border-r-0 border-b-0 border-l bg-white px-12 text-lg transition-colors hover:bg-pink-400",

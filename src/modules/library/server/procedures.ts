@@ -2,8 +2,60 @@ import { Media, Tenant } from "@/payload-types";
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import z from "zod";
 import { DEFAULT_LIMIT } from "@/lib/constants";
+import { TRPCError } from "@trpc/server";
 
 export const libraryRouter = createTRPCRouter({
+  getOne: protectedProcedure
+    .input(
+      z.object({
+        // used for infiniteQueryOptions
+        productId: z.string(),
+      }),
+    )
+    // destructuring ctx and input
+    .query(async ({ ctx, input }) => {
+      const ordersData = await ctx.payload.find({
+        collection: "orders",
+        limit: 1,
+        pagination: false,
+        where: {
+          and: [
+            {
+              product: {
+                equals: input.productId,
+              },
+            },
+            {
+              user: {
+                equals: ctx.session.user.id,
+              },
+            },
+          ],
+        },
+      });
+
+      const order = ordersData.docs[0];
+      if (!order) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Order not found",
+        });
+      }
+      const product = await ctx.payload.findByID({
+        collection: "products",
+        // pagination: false,
+        id: input.productId,
+      });
+
+      if (!product) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Product not found",
+        });
+      }
+      return product;
+    }),
+
   getMany: protectedProcedure
     .input(
       z.object({
