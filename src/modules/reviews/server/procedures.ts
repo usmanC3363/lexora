@@ -10,7 +10,7 @@ export const reviewsRouter = createTRPCRouter({
       }),
     )
     // destructuring ctx and input
-    .mutation(async ({ ctx, input }) => {
+    .query(async ({ ctx, input }) => {
       const product = await ctx.payload.findByID({
         collection: "products",
         id: input.productId,

@@ -10,11 +10,16 @@ interface Props {
   }>;
 }
 
-const LibraryPage = async ({ params }: Props) => {
+const Page = async ({ params }: Props) => {
   const { productId } = await params;
   const queryClient = getQueryClient();
   void queryClient.prefetchQuery(
     trpc.library.getOne.queryOptions({
+      productId,
+    }),
+  );
+  void queryClient.prefetchQuery(
+    trpc.reviews.getOne.queryOptions({
       productId,
     }),
   );
@@ -25,4 +30,4 @@ const LibraryPage = async ({ params }: Props) => {
   );
 };
 
-export default LibraryPage;
+export default Page;
