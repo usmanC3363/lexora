@@ -19,7 +19,11 @@ export const ProductView = ({ productId }: ProductViewProps) => {
   return (
     <div className="min-h-screen bg-white">
       <div className="w-full max-w-(--breakpoint-xl) border-b bg-[#F4F4F0] px-4 lg:px-12 2xl:max-w-(--breakpoint-2xl)">
-        <BackButton text="Back to Library" ArrowClass="size-[18px]" />
+        <BackButton
+          text="Back to Library"
+          ArrowClass="size-[18px]"
+          linkUrl="/library"
+        />
       </div>
       <header className="border-b bg-[#F4F4F0] py-8">
         <div className="mx-auto max-w-(--breakpoint-xl) px-4 lg:px-12 2xl:max-w-(--breakpoint-2xl)">

@@ -11,7 +11,11 @@ export const LibraryView = ({ className }: LibraryViewProps) => {
   return (
     <div className="min-h-screen bg-white">
       <div className="mx-auto w-full border-b bg-[#F4F4F0] px-4 lg:px-12">
-        <BackButton text="Continue Shopping" ArrowClass="size-[18px]" />
+        <BackButton
+          text="Continue Shopping"
+          ArrowClass="size-[18px]"
+          linkUrl={`/`}
+        />
       </div>
       <header className="border-b bg-[#F4F4F0] py-8">
         <div className="mx-auto flex max-w-(--breakpoint-xl) flex-col gap-y-4 px-4 lg:px-12 2xl:max-w-(--breakpoint-2xl)">
