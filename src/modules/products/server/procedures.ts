@@ -17,6 +17,10 @@ export const productsRouter = createTRPCRouter({
         collection: "products",
         id: input.id,
         depth: 2,
+        select: {
+          // this is for not leaking to api
+          content: false,
+        },
         // WIP: configure depth for images and internal data
       });
 
@@ -27,6 +31,7 @@ export const productsRouter = createTRPCRouter({
           collection: "orders",
           limit: 1,
           pagination: false,
+
           where: {
             and: [
               {
@@ -182,6 +187,10 @@ export const productsRouter = createTRPCRouter({
         sort,
         page: input.cursor,
         limit: input.limit,
+        select: {
+          // this is for not leaking to api
+          content: false,
+        },
       });
 
       // Review Aggregation, Promise.all helps with async func inside map
