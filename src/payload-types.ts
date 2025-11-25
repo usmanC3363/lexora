@@ -179,7 +179,7 @@ export interface Tenant {
   /**
    * Stripe Account Id associated with your shop
    */
-  stripeAccoutId: string;
+  stripeAccountId: string;
   /**
    * You can't create products until you submit Stripe details.
    */
@@ -268,9 +268,16 @@ export interface Tag {
 export interface Order {
   id: string;
   name: string;
-  stripeCheckoutSessionId: string;
   user: string | User;
   product: string | Product;
+  /**
+   * Stripe checkout session associated with the order
+   */
+  stripeCheckoutSessionId: string;
+  /**
+   * Stripe account associated with the order
+   */
+  stripeAccountId?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -464,7 +471,7 @@ export interface TenantsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   image?: T;
-  stripeAccoutId?: T;
+  stripeAccountId?: T;
   stripeDetailsSubmitted?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -475,9 +482,10 @@ export interface TenantsSelect<T extends boolean = true> {
  */
 export interface OrdersSelect<T extends boolean = true> {
   name?: T;
-  stripeCheckoutSessionId?: T;
   user?: T;
   product?: T;
+  stripeCheckoutSessionId?: T;
+  stripeAccountId?: T;
   updatedAt?: T;
   createdAt?: T;
 }

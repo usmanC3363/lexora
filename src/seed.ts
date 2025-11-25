@@ -146,7 +146,7 @@ const seed = async () => {
     data: {
       name: "admin",
       slug: "admin",
-      stripeAccoutId: adminAccount.id,
+      stripeAccountId: adminAccount.id,
     },
   });
 
@@ -161,16 +161,16 @@ const seed = async () => {
     },
   });
 
-  // creating normal user
-  await payload.create({
-    collection: "users",
-    data: {
-      email: "demo@dev.com",
-      password: "demo123",
-      roles: ["user"],
-      username: "demo",
-    },
-  });
+  // // creating normal user
+  // await payload.create({
+  //   collection: "users",
+  //   data: {
+  //     email: "demo@dev.com",
+  //     password: "demo123",
+  //     roles: ["user"],
+  //     username: "demo",
+  //   },
+  // });
 
   for (const category of categories) {
     const parentCategory = await payload.create({
