@@ -54,7 +54,7 @@ export const authRouter = createTRPCRouter({
         data: {
           name: input.username,
           slug: input.username,
-          stripeAccoutId: account.id,
+          stripeAccountId: account.id,
         },
       });
 

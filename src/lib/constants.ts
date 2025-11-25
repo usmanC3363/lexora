@@ -24,3 +24,4 @@ export const navLinks = [
 export const paddingWrapper = "px-4 pt-4 lg:px-12 lg:pt-16";
 
 export const DEFAULT_LIMIT = 5;
+export const PLATFORM_FEE_PERCENTAGE = 10;

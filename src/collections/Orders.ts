@@ -19,12 +19,6 @@ export const Orders: CollectionConfig = {
       required: true,
     },
     {
-      name: "stripeCheckoutSessionId",
-      type: "text",
-      required: true,
-      //   unique: true,
-    },
-    {
       name: "user",
       type: "relationship",
       relationTo: "users",
@@ -37,6 +31,21 @@ export const Orders: CollectionConfig = {
       relationTo: "products",
       required: true,
       hasMany: false,
+    },
+    {
+      name: "stripeCheckoutSessionId",
+      type: "text",
+      required: true,
+      admin: {
+        description: "Stripe checkout session associated with the order",
+      },
+    },
+    {
+      name: "stripeAccountId",
+      type: "text",
+      admin: {
+        description: "Stripe account associated with the order",
+      },
     },
   ],
 };

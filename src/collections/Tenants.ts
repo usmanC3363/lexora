@@ -42,7 +42,7 @@ export const Tenants: CollectionConfig = {
       relationTo: "media",
     },
     {
-      name: "stripeAccoutId",
+      name: "stripeAccountId",
       type: "text",
       required: true,
       access: {
