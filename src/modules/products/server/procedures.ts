@@ -114,6 +114,9 @@ export const productsRouter = createTRPCRouter({
     )
     // destructuring ctx and input
     .query(async ({ ctx, input }) => {
+      // Global where Initialization from payload Where
+      const where: Where = { isArchived: { not_equals: true } };
+
       let sort: Sort = "-createdAt";
 
       if (input.sort === "curated") {
@@ -125,7 +128,6 @@ export const productsRouter = createTRPCRouter({
       if (input.sort === "popular") {
         sort = "-createdAt";
       }
-      const where: Where = {};
 
       // Price Filters
       if (input.minPrice) {
