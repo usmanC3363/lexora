@@ -6,7 +6,7 @@ import ProductCard, { ProductCardSkeleton } from "./product-card";
 import { DEFAULT_LIMIT } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { InboxIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, extractPlainText } from "@/lib/utils";
 
 interface Props {
   category?: string;
@@ -53,7 +53,7 @@ export const ProductList = ({ category, tenantSlug, narrowView }: Props) => {
               key={product.id}
               id={product.id}
               name={product.name}
-              description={product?.description}
+              description={extractPlainText(product.description)}
               imageUrl={product.image?.url}
               tenantSlug={product.tenant?.slug}
               tenantImageUrl={product.tenant?.image?.url}

@@ -4,6 +4,7 @@ import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { BackButton } from "@/components/back-button";
 import { ReviewSidebar } from "@/modules/library/ui/_components/review-sidebar";
+import { RichText } from "@payloadcms/richtext-lexical/react";
 
 interface ProductViewProps {
   productId: string;
@@ -39,7 +40,7 @@ export const ProductView = ({ productId }: ProductViewProps) => {
           </div>
           <div className="lg:col-span-5">
             {data.content ? (
-              <p className="">{data.content}</p>
+              <RichText data={data.content} />
             ) : (
               <p className="text-muted-foreground w-fit font-medium italic">
                 No special content

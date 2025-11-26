@@ -27,7 +27,7 @@ export const Products: CollectionConfig = {
     {
       // WIP: change to richText
       name: "description",
-      type: "text",
+      type: "richText",
     },
     {
       name: "price",
@@ -62,7 +62,7 @@ export const Products: CollectionConfig = {
     },
     {
       name: "content",
-      type: "textarea",
+      type: "richText",
       // WIP: change to richText
       admin: {
         description:
@@ -76,6 +76,16 @@ export const Products: CollectionConfig = {
       defaultValue: false,
       admin: {
         description: "If checked, this product will be archived.",
+      },
+    },
+    {
+      name: "isPrivate",
+      label: "Private",
+      type: "checkbox",
+      defaultValue: false,
+      admin: {
+        description:
+          "If checked, this product will not show up on the public storefront",
       },
     },
   ],
