@@ -12,7 +12,6 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { toast } from "sonner";
-// import { CartButton } from "../_components/cart-button";
 
 interface ProductViewProps {
   productId: string;
@@ -153,7 +152,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                   </Button>
                 </div>
                 {/* REFUND POLICY INFO */}
-                <p className="text-center font-medium">
+                <p className="pb-[3px] text-center font-medium">
                   {data.refundPolicy === "no-refunds" ? (
                     "No refunds"
                   ) : (
@@ -188,6 +187,97 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                       <div className="font-medium">
                         {data.ratingDistribution[stars]}%
                       </div>
+                    </React.Fragment>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const ProductViewSkeleton = () => {
+  return (
+    <div className="px-4 py-10 lg:px-12">
+      <div className="overflow-hidden rounded-sm border bg-white">
+        {/* PRODUCT IMAGE */}
+        <div className="relative aspect-[3.9] border-b">
+          <Image
+            src={"/placeholder.png"}
+            alt=""
+            fill
+            className="object-cover"
+          />
+        </div>
+        {/* Product Content Main Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-6">
+          {/* 1st Column PRODUCT INFO */}
+          <div className="col-span-4">
+            {/* PRODUCT TITLE/NAME */}
+            <div className="min-h-16 px-6 py-4" />
+            <div className="flex min-h-16 border-y">
+              {/* PRICE */}
+              <div className="flex min-w-24 items-center justify-center border-r px-6 py-4" />
+
+              {/* TENANT INFO */}
+              <div className="flex w-fit min-w-24 items-center justify-center px-6 py-4 lg:border-r" />
+
+              {/* REVIEWS RATING on lg devices */}
+              <div className="hidden items-center justify-center px-6 py-4 lg:flex">
+                <div className="flex items-center gap-x-2">
+                  <StarRating rating={0} />
+                </div>
+              </div>
+            </div>
+
+            {/* REVIEWS RATING on smaller < lg devices */}
+            <div className="block items-center justify-center border-b px-6 py-4 lg:hidden">
+              <div className="flex items-center gap-1">
+                <StarRating rating={5} iconClassName="" />
+              </div>
+            </div>
+            {/* OPTIONAL PRODCUT DESCRIPTION */}
+            <div className="px-6 py-4"></div>
+          </div>
+          {/* SECOND COLUMN */}
+          <div className="col-span-2">
+            <div className="h-full border-t lg:border-t-0 lg:border-l">
+              <div className="flex flex-col gap-4 border-b p-6">
+                {/* ACTION BUTTONS */}
+                <div className="flex min-h-20 items-center gap-2">
+                  <Button
+                    variant="elevated"
+                    className={`flex-1 bg-pink-400`}
+                    disabled={true}
+                  >
+                    Add to Cart
+                  </Button>
+                  <Button
+                    variant="elevated"
+                    className="size-12"
+                    disabled={true}
+                  >
+                    <LinkIcon className={`absolute`} />
+                  </Button>
+                </div>
+              </div>
+              {/* WIP: Add real ratings */}
+              {/* RATINGS */}
+              <div className="p-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-x-2 font-medium"></div>
+                </div>
+                <div className="mt-4 grid grid-cols-[auto_1fr_auto] gap-3">
+                  {[5, 4, 3, 2, 1].map((stars) => (
+                    <React.Fragment key={stars}>
+                      <div className="font-medium">
+                        {stars} {stars === 1 ? "star" : "stars"}
+                      </div>
+                      <Progress value={0} className="h-[1lh]" />
+                      <div className="font-medium"></div>
                     </React.Fragment>
                   ))}
                 </div>
