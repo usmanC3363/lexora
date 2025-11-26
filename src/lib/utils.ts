@@ -16,3 +16,10 @@ export function formatCurrency(value: string | number) {
     maximumFractionDigits: 0,
   }).format(Number(value));
 }
+
+export function extractPlainText(rich: any): string {
+  if (!rich?.root?.children) return "";
+  return rich.root.children
+    .map((node: any) => ("text" in node ? node.text : ""))
+    .join(" ");
+}

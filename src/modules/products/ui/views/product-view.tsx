@@ -12,6 +12,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { toast } from "sonner";
+import { RichText } from "@payloadcms/richtext-lexical/react";
 
 interface ProductViewProps {
   productId: string;
@@ -111,7 +112,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
             {/* OPTIONAL PRODCUT DESCRIPTION */}
             <div className="px-6 py-4">
               {data.description ? (
-                <p className="">{data.description}</p>
+                <RichText data={data.description} />
               ) : (
                 <p className="text-muted-foreground font-medium italic">
                   No description available
