@@ -9,13 +9,14 @@ export const Products: CollectionConfig = {
     description: "You must verify your account before creating a product.",
   },
   access: {
-    create: ({ req, id }) => {
+    create: ({ req }) => {
       if (isSuperAdmin(req.user)) return true;
 
       const tenant = req.user?.tenants?.[0]?.tenant as Tenant;
       // tenants cant create product unless stripeDetails are submitted
       return Boolean(tenant?.stripeDetailsSubmitted);
     },
+    delete: ({ req }) => isSuperAdmin(req.user),
   },
   fields: [
     {
@@ -66,6 +67,15 @@ export const Products: CollectionConfig = {
       admin: {
         description:
           "Protected content only visible to customers after purchase. Add product documentation, downloadable files, getting started guides and bonus materials. Supports markdown formatting ",
+      },
+    },
+    {
+      name: "isArchived",
+      label: "Archive",
+      type: "checkbox",
+      defaultValue: false,
+      admin: {
+        description: "If checked, this product will be archived.",
       },
     },
   ],
