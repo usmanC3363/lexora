@@ -34,7 +34,7 @@ export const ProductList = ({ category, tenantSlug, narrowView }: Props) => {
     return (
       <div className="flex w-full flex-col items-center justify-center gap-y-4 rounded-lg border border-dashed border-black bg-white p-8">
         <InboxIcon />
-        No Products Found
+        <p className="text-base font-medium">No Products Found</p>
       </div>
     );
   }

@@ -5,6 +5,7 @@ import z from "zod";
 import { sortValues } from "../search-params";
 import { DEFAULT_LIMIT } from "@/lib/constants";
 import { headers as getHeaders } from "next/headers";
+import { TRPCError } from "@trpc/server";
 
 export const productsRouter = createTRPCRouter({
   getOne: baseProcedure
@@ -23,6 +24,13 @@ export const productsRouter = createTRPCRouter({
         },
         // WIP: configure depth for images and internal data
       });
+
+      if (product.isArchived) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Product not found",
+        });
+      }
 
       let isPurchased = false;
 
