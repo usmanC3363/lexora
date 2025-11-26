@@ -77,6 +77,11 @@ export const checkoutRouter = createTRPCRouter({
                 equals: input.tenantSlug,
               },
             },
+            {
+              isArchived: {
+                not_equals: true,
+              },
+            },
           ],
         },
       });
@@ -187,9 +192,18 @@ export const checkoutRouter = createTRPCRouter({
         collection: "products",
         depth: 2, // Populates with image, category, tenant data
         where: {
-          id: {
-            in: input.ids,
-          },
+          and: [
+            {
+              id: {
+                in: input.ids,
+              },
+            },
+            {
+              isArchived: {
+                not_equals: true,
+              },
+            },
+          ],
         },
       });
       // WIP: Invalidate user data if local storage is compromised, need to check if below is efficient for our case
