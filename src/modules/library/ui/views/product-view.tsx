@@ -5,6 +5,8 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { BackButton } from "@/components/back-button";
 import { ReviewSidebar } from "@/modules/library/ui/_components/review-sidebar";
 import { RichText } from "@payloadcms/richtext-lexical/react";
+import { Suspense } from "react";
+import { ReviewFormSkeleton } from "../_components/review-form";
 
 interface ProductViewProps {
   productId: string;
@@ -35,7 +37,9 @@ export const ProductView = ({ productId }: ProductViewProps) => {
         <div className="grid grid-cols-1 gap-y-6 lg:grid-cols-7 lg:gap-x-16">
           <div className="lg:col-span-2">
             <div className="gap-4 rounded-md border bg-white p-4">
-              <ReviewSidebar productId={productId} />
+              <Suspense fallback={<ReviewFormSkeleton />}>
+                <ReviewSidebar productId={productId} />
+              </Suspense>
             </div>
           </div>
           <div className="lg:col-span-5">
@@ -49,6 +53,20 @@ export const ProductView = ({ productId }: ProductViewProps) => {
           </div>
         </div>
       </section>
+    </div>
+  );
+};
+
+export const ProductViewSkeleton = () => {
+  return (
+    <div className="min-h-screen bg-white">
+      <div className="w-full max-w-(--breakpoint-xl) border-b bg-[#F4F4F0] px-4 lg:px-12 2xl:max-w-(--breakpoint-2xl)">
+        <BackButton
+          text="Back to Library"
+          ArrowClass="size-[18px]"
+          linkUrl="/library"
+        />
+      </div>
     </div>
   );
 };
