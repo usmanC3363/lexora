@@ -38,7 +38,7 @@ export const ProductList = () => {
               key={product.id}
               id={product.id}
               name={product.name}
-              description={product?.description}
+              description={product.description || undefined}
               imageUrl={product.image?.url}
               tenantSlug={product.tenant?.slug}
               tenantImageUrl={product.tenant?.image?.url}

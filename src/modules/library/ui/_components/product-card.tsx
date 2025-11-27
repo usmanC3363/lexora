@@ -4,7 +4,8 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { StarIcon } from "lucide-react";
-import { formatCurrency, generateTenantURL } from "@/lib/utils";
+import { RichText } from "@payloadcms/richtext-lexical/react";
+import type { SerializedEditorState } from "lexical";
 
 {
   /* WIP: Add real ratings */
@@ -13,7 +14,7 @@ import { formatCurrency, generateTenantURL } from "@/lib/utils";
 type ProductCardProps = {
   id: string;
   name: string;
-  description?: string | null;
+  description: SerializedEditorState | undefined;
   imageUrl?: string | null;
   tenantSlug: string;
   tenantImageUrl?: string | null;
@@ -48,12 +49,12 @@ const ProductCard = ({
         <div className="flex flex-1 flex-col justify-between gap-y-6">
           <div className="flex flex-col gap-y-2.5">
             {/* PRODUCT NAME */}
-
             <h2 className="line-clamp-1 text-lg leading-[140%] font-semibold">
               {name}
             </h2>
             {/* PRODUCT DESCRIPTION */}
-            <p className="line-clamp-3 text-sm">{description}</p>
+            {/* line-clamp-3 text-sm */}
+            {description ? <RichText data={description} /> : null}
           </div>
 
           {/* PRODUCT tenantSlug & Image, Review count Div */}
