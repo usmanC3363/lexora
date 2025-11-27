@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import configPromise from "@payload-config";
 import { getPayload } from "payload";
 

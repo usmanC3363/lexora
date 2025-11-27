@@ -1,9 +1,6 @@
 import { Button, Link } from "@payloadcms/ui";
 
-interface StripeVerifyProps {
-  className?: string;
-}
-export const StripeVerify = ({ className }: StripeVerifyProps) => {
+export const StripeVerify = () => {
   return (
     <Link href="/stripe-verify" className="">
       <Button>Verify Account</Button>
