@@ -1,14 +1,9 @@
-import { StarRating } from "@/components/star-rating";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import {
   ProductView,
   ProductViewSkeleton,
 } from "@/modules/products/ui/views/product-view";
 import { getQueryClient, trpc } from "@/trpc/server";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { CheckCheckIcon, LinkIcon } from "lucide-react";
-import Image from "next/image";
 import React, { Suspense } from "react";
 
 type Props = {

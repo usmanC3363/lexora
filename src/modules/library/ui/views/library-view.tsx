@@ -1,13 +1,8 @@
-import { ArrowLeftIcon } from "lucide-react";
-import Link from "next/link";
 import { ProductList, ProductListSkeleton } from "../_components/product-list";
 import { Suspense } from "react";
 import { BackButton } from "@/components/back-button";
 
-interface LibraryViewProps {
-  className?: string;
-}
-export const LibraryView = ({ className }: LibraryViewProps) => {
+export const LibraryView = () => {
   return (
     <div className="min-h-screen bg-white">
       <div className="mx-auto w-full border-b bg-[#F4F4F0] px-4 lg:px-12">

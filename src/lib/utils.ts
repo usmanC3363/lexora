@@ -1,5 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import type { SerializedEditorState, SerializedLexicalNode } from "lexical";
+
+export function extractPlainText(
+  rich: SerializedEditorState | undefined,
+): string {
+  if (!rich?.root?.children) return "";
+
+  return rich.root.children
+    .map((node: SerializedLexicalNode) =>
+      "text" in node && typeof (node as any).text === "string"
+        ? (node as any).text
+        : "",
+    )
+    .join(" ");
+}
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -24,9 +41,9 @@ export function formatCurrency(value: string | number) {
   }).format(Number(value));
 }
 
-export function extractPlainText(rich: any): string {
-  if (!rich?.root?.children) return "";
-  return rich.root.children
-    .map((node: any) => ("text" in node ? node.text : ""))
-    .join(" ");
-}
+// export function extractPlainText(rich: any): string {
+//   if (!rich?.root?.children) return "";
+//   return rich.root.children
+//     .map((node: any) => ("text" in node ? node.text : ""))
+//     .join(" ");
+// }
