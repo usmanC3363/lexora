@@ -6,6 +6,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { StarIcon } from "lucide-react";
 import { formatCurrency, generateTenantURL } from "@/lib/utils";
+import { SerializedEditorState } from "lexical";
+import { RichText } from "@payloadcms/richtext-lexical/react";
 
 {
   /* WIP: Add real ratings */
@@ -14,7 +16,7 @@ import { formatCurrency, generateTenantURL } from "@/lib/utils";
 type ProductCardProps = {
   id: string;
   name: string;
-  description?: string | null;
+  description?: SerializedEditorState | undefined;
   imageUrl?: string | null;
   tenantSlug: string;
   tenantImageUrl?: string | null;
@@ -65,7 +67,7 @@ const ProductCard = ({
               {name}
             </h2>
             {/* PRODUCT DESCRIPTION */}
-            <p className="line-clamp-3 text-sm">{description}</p>
+            {description ? <RichText data={description} /> : null}
           </div>
 
           {/* PRODUCT tenantSlug & Image, Review count Div */}
