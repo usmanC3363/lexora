@@ -112,6 +112,7 @@ export const productsRouter = createTRPCRouter({
         // used for infiniteQueryOptions
         cursor: z.number().default(1),
         limit: z.number().default(DEFAULT_LIMIT),
+        search: z.string().nullable().optional(),
         category: z.string().nullable().optional(),
         minPrice: z.string().nullable().optional(),
         maxPrice: z.string().nullable().optional(),
@@ -190,9 +191,17 @@ export const productsRouter = createTRPCRouter({
         }
       }
 
+      // TAGS
       if (input.tags && input.tags.length > 0) {
         where["tags.name"] = {
           in: input.tags,
+        };
+      }
+
+      // Search options
+      if (input.search) {
+        where["name"] = {
+          like: input.search,
         };
       }
       const data = await ctx.payload.find({
