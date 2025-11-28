@@ -57,6 +57,7 @@ export default buildConfig({
     multiTenantPlugin<Config>({
       collections: {
         products: {},
+        media: {} 
         // navigation: {
         //   isGlobal: true,
         // },
@@ -66,7 +67,8 @@ export default buildConfig({
       },
       userHasAccessToAllTenants: (user) => isSuperAdmin(user),
     }),
-    // storage-adapter
+    // storage-adapter 
+    // causes issue in localhost/development 
     vercelBlobStorage({
       enabled: true, // Optional, defaults to true
       // clientUploads: true,
