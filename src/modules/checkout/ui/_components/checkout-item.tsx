@@ -51,7 +51,7 @@ export const CheckoutItem = ({
           </Link>
         </div>
       </div>
-      <div className="flex min-w-[5.75rem] flex-col justify-between py-4">
+      <div className="flex min-w-23 flex-col justify-between py-4">
         <p className="font-medium">{formatCurrency(price)}</p>
         <button
           className="group flex cursor-pointer items-center"

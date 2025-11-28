@@ -20,7 +20,7 @@ export const CartButton = ({ tenantSlug, productId, isPurchased }: Props) => {
         asChild
         disabled={false}
       >
-        <Link prefetch href={`/library/${productId}`}>
+        <Link href={`${process.env.NEXT_PUBLIC_APP_URL}/library/${productId}`}>
           View in Library
         </Link>
       </Button>
